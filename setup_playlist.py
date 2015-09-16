@@ -18,21 +18,25 @@ def _is_audio(f):
 	ext = ext[1:]
 	return ext in AUDIO_EXTENSIONS
 
-def score_track(audio_file):
+def _score_track(audio_file):
 	print 'File: ', audio_file
 	pytrack = track.track_from_filename(audio_file)
+
 	# print 'Artist: ', pytrack.artist if hasattr(pytrack, 'artist') else 'Unknown'
 	# print 'Title: ', pytrack.title if hasattr(pytrack, 'title') else 'Unknown'
 	print 'Track ID: ', pytrack.id
 	print 'Tempo: ', pytrack.tempo
 	print 'Energy: %1.3f %s' % (pytrack.energy, _bar(pytrack.energy))
-	if not pytrack.valence:
-		print 'Force uploading...'
-		pytrack = track.track_from_filename(audio_file, force_upload=True)
-	score = pytrack.energy + pytrack.tempo
 	
+	# Todo: Scale parameters
+	score = pytrack.energy + pytrack.tempo 
+
+	# if not pytrack.valence:
+	# 	print 'Force uploading...'
+	# 	pytrack = track.track_from_filename(audio_file, force_upload=True)	
 	# print 'Valence: %1.3f %s' % (pytrack.valence, _bar(pytrack.valence))
 	# print 'Acousticness: %1.3f %s' % (pytrack.acousticness, _bar(pytrack.acousticness))
+
 	return score, audio_file
 
 def init_playlist(directory):
@@ -40,6 +44,5 @@ def init_playlist(directory):
 	for f in os.listdir(directory):
 		if _is_audio(f):
 			path = os.path.join(directory, f)
-			playlist.append(score_track(path))
-	playlist = sorted(playlist, reverse=True)
-	return playlist
+			playlist.append(_score_track(path))
+	return sorted(playlist, reverse=True)
