@@ -24,12 +24,13 @@ def _score_track(audio_file):
 
 	# print 'Artist: ', pytrack.artist if hasattr(pytrack, 'artist') else 'Unknown'
 	# print 'Title: ', pytrack.title if hasattr(pytrack, 'title') else 'Unknown'
-	print 'Track ID: ', pytrack.id
-	print 'Tempo: ', pytrack.tempo
+	# print 'Track ID: ', pytrack.id
+	# print 'Tempo: ', pytrack.tempo
+
 	print 'Energy: %1.3f %s' % (pytrack.energy, _bar(pytrack.energy))
 	
-	# Todo: Scale parameters
-	score = pytrack.energy + pytrack.tempo 
+	# Make scoring metric customizable
+	score = pytrack.energy
 
 	# if not pytrack.valence:
 	# 	print 'Force uploading...'
