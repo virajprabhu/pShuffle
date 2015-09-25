@@ -1,7 +1,7 @@
 import sys
 import math
 from pyechonest import song 
-import moodgraph_input as mi
+import moodgraph as mi
 from setup_playlist import init_playlist
 
 def main():
@@ -17,8 +17,6 @@ def main():
 
 	bucket = []	
 
-	# tag = ['UP', 'DN', 'UP', 'DN']	# Todo: Do this better
-
 	for i in range(0, num_buckets):
 		bucket.append([])
 
@@ -27,15 +25,12 @@ def main():
 		if (i%2 == 0):
 			head = playlist.pop(0)
 			bucket[i].append(head)
-			# bucket[i+1].append(head)
 		else:
 			tail = playlist.pop()
 			bucket[i].append(tail)
-			# bucket[i+1].append(tail)
-		# print bucket[0]  , ' ', bucket[1] , ' ', bucket[2]  , ' ', bucket[3]  , ' '
 
 	# Anchors
-	anchor_start = playlist.pop() # if (tag[0] == 'UP') else playlist.pop() 
+	anchor_start = playlist.pop() 
 	anchor_final = playlist.pop(0) if ((num_buckets-1) % 2 == 1) else playlist.pop()
 
 	# Fillers
@@ -49,10 +44,8 @@ def main():
 			else:
 				bucket[0].append(anchor_start)	# Append anchors
 				bucket[num_buckets-1].append(anchor_final)
-				# print bucket[0]  , ' ', bucket[1] , ' ', bucket[2]  , ' ', bucket[3]  , ' '
 				log_pshuffled_playlist(bucket)
 				return
-			# print bucket[0]  , ' ', bucket[1] , ' ', bucket[2]  , ' ', bucket[3]  , ' '
 
 def log_pshuffled_playlist(bucket):
 	for i in range (0, len(bucket)):

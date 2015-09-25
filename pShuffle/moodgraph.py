@@ -22,9 +22,7 @@ sfreq.valtext.set_visible(False)
 
 def update(val):
 	global freq
-	# amp = samp.val
 	freq = sfreq.val
-	# freq = sfreq.val
 	print 'amplitude:', amp, 'frequency:', freq
 	l.set_ydata(amp*np.sin(2*np.pi*freq*t))
 	fig.canvas.draw_idle()
